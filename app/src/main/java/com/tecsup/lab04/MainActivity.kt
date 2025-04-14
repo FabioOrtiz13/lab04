@@ -4,14 +4,18 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.tecsup.lab04.ui.theme.Lab04Theme
 
 class MainActivity : ComponentActivity() {
@@ -20,13 +24,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Lab04Theme {
-                Scaffold(
-                    modifier = Modifier.fillMaxSize(),
-                    bottomBar = { Boton() }
-                ) { innerPadding ->
-                    Text(
-                        text = "Contenido principal",
-                        modifier = Modifier.padding(innerPadding))
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    LazyColumnExample(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
@@ -34,26 +33,26 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Boton() {
-    var selectedIndex by remember { mutableIntStateOf(0) }
-    val items = listOf("Inicio", "Buscar", "Perfil")
-
-    NavigationBar {
-        items.forEachIndexed { index, item ->
-            NavigationBarItem(
-                icon = { Icon(Icons.Default.Home, contentDescription = null) },
-                label = { Text(item) },
-                selected = selectedIndex == index,
-                onClick = { selectedIndex = index }
+fun LazyColumnExample(modifier: Modifier = Modifier) {
+    LazyColumn(modifier = modifier) {
+        items(5) { index ->
+            Text(
+                text = "numero $index",
+                modifier = Modifier
+                    .padding(16.dp)
+                    .background(Color.LightGray)
+                    .fillMaxWidth(),
+                fontSize = 20.sp
             )
         }
     }
 }
 
+
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     Lab04Theme {
-        Boton()
+        LazyColumnExample()
     }
 }
