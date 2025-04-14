@@ -4,19 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.tecsup.lab04.ui.theme.Lab04Theme
 
 class MainActivity : ComponentActivity() {
@@ -25,8 +20,13 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Lab04Theme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Imagenn(modifier = Modifier.padding(innerPadding))
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    bottomBar = { Boton() }
+                ) { innerPadding ->
+                    Text(
+                        text = "Contenido principal",
+                        modifier = Modifier.padding(innerPadding))
                 }
             }
         }
@@ -34,18 +34,26 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Imagenn(modifier: Modifier = Modifier) {
-    Image(
-        painter = painterResource(id = R.drawable.griz),
-        contentDescription = "imagen",
-        modifier = Modifier.size(200.dp)
-    )
+fun Boton() {
+    var selectedIndex by remember { mutableIntStateOf(0) }
+    val items = listOf("Inicio", "Buscar", "Perfil")
+
+    NavigationBar {
+        items.forEachIndexed { index, item ->
+            NavigationBarItem(
+                icon = { Icon(Icons.Default.Home, contentDescription = null) },
+                label = { Text(item) },
+                selected = selectedIndex == index,
+                onClick = { selectedIndex = index }
+            )
+        }
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     Lab04Theme {
-        Imagenn()
+        Boton()
     }
 }
