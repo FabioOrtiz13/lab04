@@ -4,19 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.tecsup.lab04.ui.theme.Lab04Theme
 
 class MainActivity : ComponentActivity() {
@@ -39,23 +34,19 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun ViewHolaCurso() {
-    Column(
-        modifier = Modifier
-            .fillMaxWith()  // ERROR: fillMaxWith no existe
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = "Welcome to the Course!",
-            fontSize = 28.sp,
-            fontWeight = FontWeigh.Bold  // ERROR: FontWeigh -> FontWeight
-        )
-        Spacer(modifier = Modifier.heigh(16.dp))  // ERROR: heigh -> height
-        Text(
-            text = "Hello, Student!",
-            fontSize = 20.xD  // ERROR: 20.xD no es válido
-        )
+fun Boton() {
+    var selectedIndex by remember { mutableIntStateOf(0) }
+    val items = listOf("Inicio", "Buscar", "Perfil")
+
+    NavigationBar {
+        items.forEachIndexed { index, item ->
+            NavigationBarItem(
+                icon = { Icon(Icons.Default.Home, contentDescription = null) },
+                label = { Text(item) },
+                selected = selectedIndex == index,
+                onClick = { selectedIndex = index }
+            )
+        }
     }
 }
 
@@ -63,6 +54,6 @@ fun ViewHolaCurso() {
 @Composable
 fun GreetingPreview() {
     Lab04Theme {
-        ViewHolaCurso()
+        Boton()
     }
 }
