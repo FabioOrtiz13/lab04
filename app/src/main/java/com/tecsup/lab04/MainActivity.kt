@@ -11,7 +11,6 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.tecsup.lab04.ui.theme.Lab04Theme
 
@@ -42,19 +41,8 @@ fun Boton() {
     NavigationBar {
         items.forEachIndexed { index, item ->
             NavigationBarItem(
-                icon = {
-                    Icon(
-                        imageVector = Icons.Default.Home,
-                        contentDescription = null,
-                        tint = if (selectedIndex == index) Color.Blue else Color.Gray
-                    )
-                },
-                label = {
-                    Text(
-                        text = item,
-                        color = if (selectedIndex == index) Color.Blue else Color.Gray
-                    )
-                },
+                icon = { Icon(Icons.Default.Home, contentDescription = null) },
+                label = { Text(item) },
                 selected = selectedIndex == index,
                 onClick = { selectedIndex = index }
             )
